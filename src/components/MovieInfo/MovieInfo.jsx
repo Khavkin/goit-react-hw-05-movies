@@ -3,9 +3,10 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 const MovieInfo = () => {
   const { id } = useParams();
-
+  console.log(id);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/products';
+  console.log(location);
+  // const backLinkHref = location.state?.from ?? '/products';
   return (
     <div>
       Movie Info
