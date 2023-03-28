@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const SharedLayout = () => {
-  console.log('Shared Layout');
+  // console.log('Shared Layout');
   return (
     <div>
       <header>

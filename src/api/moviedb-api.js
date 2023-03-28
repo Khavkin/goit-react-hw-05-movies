@@ -96,37 +96,5 @@ export async function searchMovie(query = '') {
 }
 
 export function getImagePath(image) {
-  return BASE_IMAGE_URL + image;
+  return image ? BASE_IMAGE_URL + image : '';
 }
-
-// export function getTrending() {
-//   return fetch(`${BASE_URL}trending/all/week?api_key=${API_KEY}`)
-//     .then(responce => responce.json())
-//     .then(responce => {
-//       return responce.results;
-//     })
-//     .then(results => {
-//       return results;
-//     })
-//     .catch(error => {
-//       console.error(error);
-//     });
-// }
-
-// getTrending().then(res => {
-//   console.dir(res);
-// });
-
-// getMovieInfo(594767).then(res => {
-//   console.dir(res);
-// });
-
-// getMovieCredits(594767).then(res => {
-//   console.dir(res);
-// });
-
-//https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=<<api_key>>&language=en-US&page=1
-
-//https://api.themoviedb.org/3/search/movie?api_key=cedb0d61b1d63f0d25850ca71581631f&language=en-US&query=stargate&page=1&include_adult=false
-
-//https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=<<api_key>>&language=en-US
