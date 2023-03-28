@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/98.6461b298.chunk.js","mappings":"8LAIA,EAJe,WACb,OAAO,wCACR,C","sources":["components/Review/Review.jsx"],"sourcesContent":["const Review = () => {\n  return <div>It's review</div>;\n};\n\nexport default Review;\n"],"names":[],"sourceRoot":""}
