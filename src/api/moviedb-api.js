@@ -10,11 +10,17 @@ export async function getTrending() {
     if (responce.status === 200) {
       const result = await responce.json();
       return result.results.map(item => {
-        return { id: item.id, name: item.name || item.title };
+        return {
+          id: item.id,
+          name: item.name || item.title,
+          poster_path: getImagePath(item.poster_path),
+        };
       });
     } else return [];
   } catch (error) {
-    console.error(error.message);
+    return new Promise.reject(
+      `Ошибка ${error.message} получения информации фильмам `
+    );
   }
 }
 
@@ -29,7 +35,9 @@ export async function getMovieInfo(movieID) {
       return result;
     } else return {};
   } catch (error) {
-    console.error(error.message);
+    return new Promise.reject(
+      `Ошибка ${error.message} получения информации фильму ${movieID}  `
+    );
   }
 }
 export async function getMovieReview(movieID) {
@@ -47,7 +55,9 @@ export async function getMovieReview(movieID) {
       }));
     } else return [];
   } catch (error) {
-    console.error(error.message);
+    return new Promise.reject(
+      `Ошибка ${error.message} получения отзывов к фильму ${movieID}  `
+    );
   }
 }
 
@@ -65,7 +75,7 @@ export async function getMovieCredits(movieID) {
           name: item.name,
           original_name: item.original_name,
           popularity: item.popularity,
-          profile_path: item.profile_path,
+          profile_path: getImagePath(item.profile_path),
           character: item.character,
         };
       });
@@ -73,7 +83,9 @@ export async function getMovieCredits(movieID) {
       return results;
     } else return [];
   } catch (error) {
-    console.error(error.message);
+    return new Promise.reject(
+      `Ошибка ${error.message} получения актеров фильма ${movieID}  `
+    );
   }
 }
 
@@ -87,14 +99,20 @@ export async function searchMovie(query = '') {
     if (responce.status === 200) {
       const result = await responce.json();
       return result.results.map(item => {
-        return { id: item.id, name: item.name || item.title };
+        return {
+          id: item.id,
+          name: item.name || item.title,
+          poster_path: getImagePath(item.poster_path),
+        };
       });
     } else return [];
   } catch (error) {
-    console.error(error.message);
+    return new Promise.reject(
+      `Ошибка ${error.message} поиска фильма по запросу ${query}`
+    );
   }
 }
 
 export function getImagePath(image) {
-  return image ? BASE_IMAGE_URL + image : '';
+  return image ? BASE_IMAGE_URL + image : 'https://via.placeholder.com/300x400';
 }

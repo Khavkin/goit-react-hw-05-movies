@@ -1,22 +1,28 @@
 import { Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { Header, MainContainer, Nav, NavItem } from './SharedLayout.styled';
 
 const SharedLayout = () => {
-  // console.log('Shared Layout');
+  const location = useLocation();
+
   return (
-    <div>
-      <header>
-        <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/Movies">Movies</NavLink>
-        </nav>
-      </header>
+    <>
+      <Header>
+        <Nav>
+          <NavItem to="/" state={{ from: location }}>
+            Home
+          </NavItem>
+          <NavItem to="/Movies" state={{ from: location }}>
+            Movies
+          </NavItem>
+        </Nav>
+      </Header>
       <Suspense fallback={<div>Loading page...</div>}>
-        <main>
+        <MainContainer>
           <Outlet />
-        </main>
+        </MainContainer>
       </Suspense>
-    </div>
+    </>
   );
 };
 

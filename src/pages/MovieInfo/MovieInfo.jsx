@@ -1,33 +1,24 @@
 import { getMovieInfo } from 'api/moviedb-api';
+import { Container, Section } from 'components/common.styled';
 import MovieCard from 'components/MovieCard';
-import { Suspense, useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-
-// const appStatus = {
-//   IDLE: 0,
-//   PENDING: 1,
-//   RESOLVED: 2,
-//   REJECTED: 4,
-// };
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import {
+  AdditionalInfo,
+  AdditionalInfoContainer,
+  AdditionalInfoLink,
+  BackLink,
+} from './MovieInfo.styled';
 
 const MovieInfo = () => {
-  const { id } = useParams();
+  const { moveID } = useParams();
   const [movieInfo, setMovieInfo] = useState(null);
-  const [isReady, setIsReady] = useState(false);
-
-  //const isMount = useRef(true);
 
   const location = useLocation();
-
-  const backLinkHref = location.state?.from ?? '/';
-
-  // console.log('movieInfo', movieInfo);
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
-    // if (isMount.current) {
-    //   isMount.current = false;
-    getMovieInfo(id).then(responce => {
-      //console.dir(responce);
+    getMovieInfo(moveID).then(responce => {
       const {
         genres,
         id,
@@ -39,6 +30,7 @@ const MovieInfo = () => {
         title,
         vote_average,
       } = responce;
+
       setMovieInfo({
         genres,
         id,
@@ -50,22 +42,36 @@ const MovieInfo = () => {
         title,
         vote_average,
       });
-      setIsReady(true);
     });
-    // }
-  }, [id]);
+  }, [moveID]);
 
   return (
-    <>
-      {/* Movie Info */}
-      <Link to={backLinkHref}>Go back</Link>
-      {isReady && <MovieCard movieInfo={movieInfo} />}
-      <Link to="cast">Cast</Link>
-      <Link to="review">Review</Link>
-      <Suspense fallback={<div>Loading page...</div>}>
-        <Outlet />
-      </Suspense>
-    </>
+    <Section>
+      <Container>
+        {/* Movie Info */}
+        <BackLink to={backLinkHref.current} state={{ from: location }}>
+          Go back
+        </BackLink>
+        {movieInfo && movieInfo.id && (
+          <MovieCard movieInfo={movieInfo}></MovieCard>
+        )}
+        <AdditionalInfoContainer>
+          <h3>Additional information</h3>
+          <AdditionalInfo>
+            <li>
+              <AdditionalInfoLink to="cast">Cast</AdditionalInfoLink>
+            </li>
+            <li>
+              <AdditionalInfoLink to="review">Review</AdditionalInfoLink>
+            </li>
+          </AdditionalInfo>
+        </AdditionalInfoContainer>
+
+        <Suspense fallback={<div>Loading page...</div>}>
+          <Outlet />
+        </Suspense>
+      </Container>
+    </Section>
   );
 };
 

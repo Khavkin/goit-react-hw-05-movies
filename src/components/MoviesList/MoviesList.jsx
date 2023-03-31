@@ -1,24 +1,30 @@
 //import Movies from 'pages/Movies';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import MoviesListItem from 'components/MoviesListItem';
+import { MoviesListItemCard, MoviesListWrapper } from './MoviesList.styled';
 
 const MoviesList = ({ movies }) => {
   const location = useLocation();
-  console.log(location);
+  //console.log('movieList', location);
   return (
-    <ul>
+    <MoviesListWrapper>
       {movies &&
         movies.map(item => (
-          <li key={item.id}>
+          <MoviesListItemCard key={item.id}>
             <Link
               to={`${location.pathname === '/' ? 'movies/' : ''}${item.id}`}
               state={{ from: location }}
             >
-              {item.name}
+              {/* {item.name} */}
+              <MoviesListItem
+                movieName={item.name}
+                movieImage={item.poster_path}
+              />
             </Link>
-          </li>
+          </MoviesListItemCard>
         ))}
-    </ul>
+    </MoviesListWrapper>
   );
 };
 
@@ -27,6 +33,7 @@ MoviesList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
+      poster_path: PropTypes.string,
     })
   ),
 };

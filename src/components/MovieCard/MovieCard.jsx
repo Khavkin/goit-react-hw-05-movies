@@ -9,7 +9,6 @@ import {
 import PropTypes from 'prop-types';
 
 const MovieCard = ({ movieInfo }) => {
-  console.dir(movieInfo);
   const createGenre = genres => {
     return genres.map(genre => genre.name).join(', ');
   };
@@ -43,36 +42,22 @@ const MovieCard = ({ movieInfo }) => {
 };
 
 MovieCard.propTypes = {
-  genres: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ),
-  id: PropTypes.number.isRequired,
-  overview: PropTypes.string,
-  popularity: PropTypes.number.isRequired,
-  poster_path: PropTypes.string,
-  release_date: PropTypes.string.isRequired,
-  tagline: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  vote_average: PropTypes.number.isRequired,
+  movieInfo: PropTypes.shape({
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+      })
+    ),
+    id: PropTypes.number.isRequired,
+    overview: PropTypes.string,
+    popularity: PropTypes.number.isRequired,
+    poster_path: PropTypes.string,
+    release_date: PropTypes.string.isRequired,
+    tagline: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+  }),
 };
 
 export default MovieCard;
-
-// genres,
-// homepage,
-// id,
-// original_language,
-// original_title,
-// overview,
-// popularity,
-// poster_path,
-// production_companies,
-// production_countries,
-// release_date,
-// runtime,
-// spoken_languages,
-// tagline,
-// title,
